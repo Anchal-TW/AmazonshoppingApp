@@ -1,118 +1,91 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import Home from './src/home/home';
+import Wishlist from './src/wishlist/wishlist';
+import Cart from './src/cart/cart';
+import Setting from './src/setting/setting';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Tab = createBottomTabNavigator();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarActiveTintColor: 'black',
+          tabBarInactiveTintColor: 'gray',
+          tabBarStyle: {
+            backgroundColor: 'aliceblue',
           },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({focused}) => {
+              const item = {
+                name: 'https://cdn-icons-png.freepik.com/256/263/263115.png',
+                isFocus: focused,
+              };
+              return SetIcon(item);
+            },
+          }}></Tab.Screen>
+        <Tab.Screen
+          name="Wishlist"
+          component={Wishlist}
+          options={{
+            tabBarIcon: ({focused}) => {
+              const item = {
+                name: 'https://cdn-icons-png.freepik.com/256/1077/1077035.png?ga=GA1.1.334955396.1710843703&',
+                isFocus: focused,
+              };
+              return SetIcon(item);
+            },
+          }}></Tab.Screen>
+        <Tab.Screen
+          name="Cart"
+          component={Cart}
+          options={{
+            tabBarIcon: ({focused}) => {
+              const item = {
+                name: 'https://cdn-icons-png.freepik.com/256/1170/1170678.png?ga=GA1.1.334955396.1710843703&',
+                isFocus: focused,
+              };
+              return SetIcon(item);
+            },
+          }}></Tab.Screen>
+        <Tab.Screen
+          name="Setting"
+          component={Setting}
+          options={{
+            tabBarIcon: ({focused}) => {
+              const item = {
+                name: 'https://cdn-icons-png.freepik.com/256/3524/3524636.png?ga=GA1.1.334955396.1710843703&',
+                isFocus: focused,
+              };
+              return SetIcon(item);
+            },
+          }}></Tab.Screen>
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+const SetIcon = (prop: any) => {
+  const {name, isFocus} = prop;
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Image
+      style={{tintColor: isFocus ? 'black' : 'gray'}}
+      source={{
+        uri: name,
+        height: 20,
+        width: 20,
+      }}></Image>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
