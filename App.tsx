@@ -1,8 +1,7 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { Button, Image, StyleSheet, Text, View} from 'react-native';
 import Home from './src/home/home';
 import Wishlist from './src/wishlist/wishlist';
 import Cart from './src/cart/cart';
@@ -59,7 +58,7 @@ const App = () => {
             },
           }}></Tab.Screen>
         <Tab.Screen
-          name="Setting"
+          name="Settings"
           component={Setting}
           options={{
             tabBarIcon: ({focused}) => {
