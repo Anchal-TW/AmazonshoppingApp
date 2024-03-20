@@ -1,6 +1,8 @@
-import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Storage from '../helper/Storage';
+import Screen from '../helper/view';
+import ScreenTitle from '../helper/title';
 
 const Home = () => {
   const [userName, setUserName] = useState('');
@@ -10,20 +12,34 @@ const Home = () => {
     setInputText(text);
   };
 
+  //Storage.removeItem('userName');
+
+  const registerName = () => {
+    return (
+      <Screen>
+        <>
+          <TextInput
+            placeholder="Enter your name"
+            onChangeText={handleTextInput}
+            value={inputText}
+          />
+          <Button onPress={handleSubmit} title="Submit" />
+        </>
+      </Screen>
+    );
+  };
+
   const handleSubmit = () => {
     setUserName(inputText);
-    AsyncStorage.setItem('userName', inputText);
+    Storage.setItem('userName', inputText);
   };
-  //AsyncStorage.removeItem('userName');
 
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const storedName = await AsyncStorage.getItem('userName');
-        if (storedName !== null) {
+        const storedName = await Storage.getItem('userName');
+        if (storedName) {
           setUserName(storedName);
-        } else {
-          setInputText('');
         }
       } catch (error) {
         console.error('Error retrieving user data:', error);
@@ -34,18 +50,11 @@ const Home = () => {
   }, []);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {userName ? (
-        <Text style={{color: 'black'}}>Hey {userName}</Text>
+        <ScreenTitle>{`Hey ${userName}`}</ScreenTitle>
       ) : (
-        <>
-          <TextInput
-            placeholder="Enter your name"
-            onChangeText={handleTextInput}
-            value={inputText}
-          />
-          <Button onPress={handleSubmit} title="Submit" />
-        </>
+        registerName()
       )}
     </View>
   );
