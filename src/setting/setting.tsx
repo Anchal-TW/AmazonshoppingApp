@@ -1,29 +1,37 @@
-import { Button, View, StyleSheet } from 'react-native';
+import { Button, View, StyleSheet, Text, Switch } from 'react-native';
 import ScreenTitle from '../helper/title';
-import Screen from '../helper/view';
 import Storage from '../helper/Storage';
+import { useTheme } from '../store/ThemeProvider-Context';
 
 const Setting = () => {
-  const handleDisplayMode = (mode: string) => {
-    Storage.setItem('DisplayMode', mode);
-  };
+  const { toggleTheme, isDarkMode, backgroundColor } = useTheme();
 
   return (
-    <View style={styles.settingsItem}>
-      <ScreenTitle>{'Display Mode'}</ScreenTitle>
-      <Button title='Light' onPress={() => handleDisplayMode('light')} />
-      <Button title='Dark' onPress={() => handleDisplayMode('dark')} />
+    <View style={[styles.container, { backgroundColor }]}>
+      <View style={styles.switchContainer}>
+        <Text >Dark Mode</Text>
+        <Switch
+          value={isDarkMode}
+          onValueChange={toggleTheme}
+        />
+      </View>
     </View>
   );
 
-  
 };
 
 export default Setting;
 
 const styles = StyleSheet.create({
-  settingsItem: {
-    flexDirection: 'row'
-  }
-}
-);
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  
+});
+

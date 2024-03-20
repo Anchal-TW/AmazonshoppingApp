@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Storage from '../helper/Storage';
 import Screen from '../helper/view';
 import ScreenTitle from '../helper/title';
+import { useTheme } from '../store/ThemeProvider-Context';
+
 
 const Home = () => {
+  const { backgroundColor } = useTheme();
+
   const [userName, setUserName] = useState('');
   const [inputText, setInputText] = useState('');
 
@@ -50,7 +54,7 @@ const Home = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' ,backgroundColor}}>
       {userName ? (
         <ScreenTitle>{`Hey ${userName}`}</ScreenTitle>
       ) : (
