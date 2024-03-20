@@ -1,5 +1,4 @@
-import {Text, View} from 'react-native';
-import customStyles from '../style/style';
+import {StyleSheet, Text, View} from 'react-native';
 
 const Setting = () => {
   return (
@@ -8,5 +7,10 @@ const Setting = () => {
     </View>
   );
 };
+
+const customStyles = StyleSheet.create({
+  textStyle: {fontSize: 16, color: 'black'},
+  viewStyle: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+});
 
 export default Setting;
