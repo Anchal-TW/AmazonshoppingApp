@@ -1,17 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import ScreenTitle from '../helper/title';
+import Screen from '../helper/view';
 
-const Wishlist = () => {
-  return (
-    <View style={customStyles.viewStyle}>
-      <Text style={customStyles.textStyle}>Wishlist</Text>
-    </View>
-  );
-};
-
-const customStyles = StyleSheet.create({
-  textStyle: {fontSize: 16, color: 'black'},
-  viewStyle: {flex: 1, justifyContent: 'center', alignItems: 'center'},
-});
+const Wishlist = () => (
+  <Screen>
+    <ScreenTitle children={'wishlist'}></ScreenTitle>
+  </Screen>
+);
 
 export default Wishlist;
