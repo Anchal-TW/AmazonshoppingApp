@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Storage from '../helper/Storage';
 import Screen from '../helper/view';
@@ -7,7 +7,7 @@ import { useTheme } from '../store/ThemeProvider-Context';
 
 
 const Home = () => {
-  const { backgroundColor } = useTheme();
+  const { backgroundColor, textColor } = useTheme();
 
   const [userName, setUserName] = useState('');
   const [inputText, setInputText] = useState('');
@@ -16,18 +16,24 @@ const Home = () => {
     setInputText(text);
   };
 
-  //Storage.removeItem('userName');
+  Storage.removeItem('userName');
 
   const registerName = () => {
     return (
       <Screen>
         <>
           <TextInput
+            style={styles.input}
             placeholder="Enter your name"
             onChangeText={handleTextInput}
             value={inputText}
           />
-          <Button onPress={handleSubmit} title="Submit" />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
         </>
       </Screen>
     );
@@ -54,9 +60,9 @@ const Home = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' ,backgroundColor}}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor }}>
       {userName ? (
-        <ScreenTitle>{`Hey ${userName}`}</ScreenTitle>
+        <ScreenTitle color={textColor} >{`Hey ${userName}`}</ScreenTitle>
       ) : (
         registerName()
       )}
@@ -65,3 +71,26 @@ const Home = () => {
 };
 
 export default Home;
+
+const styles = StyleSheet.create({
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 15,
+    width:200
+  },
+  button: {
+    backgroundColor: 'deepskyblue',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});

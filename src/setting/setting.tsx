@@ -4,12 +4,12 @@ import Storage from '../helper/Storage';
 import { useTheme } from '../store/ThemeProvider-Context';
 
 const Setting = () => {
-  const { toggleTheme, isDarkMode, backgroundColor } = useTheme();
+  const { toggleTheme, isDarkMode, backgroundColor ,textColor} = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.switchContainer}>
-        <Text >Dark Mode</Text>
+        <Text style = {{color:textColor}}>Dark Mode</Text>
         <Switch
           value={isDarkMode}
           onValueChange={toggleTheme}

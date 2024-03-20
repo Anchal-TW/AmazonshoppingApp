@@ -6,11 +6,12 @@ import Home from './home/home';
 import Wishlist from './wishlist/wishlist';
 import Cart from './cart/cart';
 import Setting from './setting/setting';
-import { ThemeProvider } from './store/ThemeProvider-Context';
+import { ThemeProvider, useTheme } from './store/ThemeProvider-Context';
 
 const Tab = createBottomTabNavigator();
 
 const TabScreen = () => {
+  
   return (
     <ThemeProvider>
       <NavigationContainer>
@@ -20,7 +21,10 @@ const TabScreen = () => {
             tabBarActiveTintColor: 'black',
             tabBarInactiveTintColor: 'gray',
             tabBarStyle: {
-              backgroundColor: 'aliceblue',
+              backgroundColor: 'cadetblue',
+            },
+            headerStyle: {
+              backgroundColor: 'cadetblue',
             },
           }}>
           <Tab.Screen
@@ -91,6 +95,4 @@ const SetIcon = (prop: any) => {
 };
 
 export default TabScreen;
-export const App = () => {
-  return <TabScreen />;
-};
+
