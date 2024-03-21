@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, {createContext, useState, useContext, useEffect} from 'react';
 import Storage from '../helper/Storage';
 
 const ThemeContext = createContext();
@@ -7,8 +7,7 @@ export const useTheme = () => {
   return useContext(ThemeContext);
 };
 
-export const ThemeProvider = ({ children }) => {
-  
+export const ThemeProvider = ({children}) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -26,8 +25,8 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const toggleTheme = () => {
-    setIsDarkMode(isDarkMode => {
-      const newMode = !isDarkMode;
+    setIsDarkMode(prevMode => {
+      const newMode = !prevMode;
       Storage.setItem('darkmode', newMode.toString());
       return newMode;
     });
@@ -41,8 +40,6 @@ export const ThemeProvider = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={theme}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
   );
 };

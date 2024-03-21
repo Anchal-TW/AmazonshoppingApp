@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Text, View, FlatList, StyleSheet } from 'react-native';
-import { useTheme } from '../store/ThemeProvider-Context';
+import React, {useEffect, useState} from 'react';
+import {Image, Text, View, FlatList, StyleSheet} from 'react-native';
+import {useTheme} from '../store/ThemeProvider-Context';
 
 interface User {
   id: number;
@@ -9,34 +9,32 @@ interface User {
   category: string;
   description: string;
   image: string;
-  rating: { rate: number; count: number };
+  rating: {rate: number; count: number};
 }
 
 const Home = () => {
-  const { backgroundColor, textColor } = useTheme();
+  const {backgroundColor, textColor, isDarkMode} = useTheme();
+
   const [items, setItems] = useState<User[]>([]);
 
   const getListItem = async () => {
     const url = 'https://fakestoreapi.com/products';
     fetch(url)
-      .then((resp) => resp.json())
-      .then((json) => {
+      .then(resp => resp.json())
+      .then(json => {
         setItems(json);
       })
-      .catch((error) => console.error(error));
+      .catch(error => console.error(error));
   };
 
   useEffect(() => {
     getListItem();
   }, []);
 
-  const displayItem = ({ item }: { item: User }) => {
+  const displayItem = ({item}: {item: User}) => {
     return (
       <View style={styles.itemContainer}>
-        <Image
-          style={styles.image}
-          source={{ uri: item.image }}
-        />
+        <Image style={styles.image} source={{uri: item.image}} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.price}>{item.price}</Text>
         <Text style={styles.rating}>
@@ -49,28 +47,32 @@ const Home = () => {
   return (
     <FlatList
       data={items}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={item => String(item.id)}
       renderItem={displayItem}
       numColumns={2}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={[
+        styles.container,
+        {backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke'},
+      ]}
     />
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff', // Adjust background color as needed
+    backgroundColor: 'whitesmoke',
+    padding: 10, // Adjust background color as needed
   },
   itemContainer: {
     flex: 1,
     padding: 10,
     margin: 10,
-    borderRadius: 30,
-    backgroundColor: '#f2f2f2', // Adjust background color as needed
+    borderRadius: 20,
+    backgroundColor: 'white', // Adjust background color as needed
   },
   image: {
     width: '100%',
-    height: 150,
+    height: 160,
     resizeMode: 'cover',
     borderRadius: 8,
   },
@@ -90,19 +92,6 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, {useEffect, useState} from 'react';
 // import {Image, ScrollView, Text, View, FlatList} from 'react-native';
@@ -151,7 +140,7 @@ export default Home;
 //                 source={{uri: itemData.image}}></Image>
 //             </View>
 //           );
-//   } 
+//   }
 
 //   return (
 //     <FlatList
@@ -186,5 +175,3 @@ export default Home;
 // };
 
 // export default Home;
-
-
