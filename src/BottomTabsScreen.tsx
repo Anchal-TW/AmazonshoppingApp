@@ -120,11 +120,11 @@ const SetIcon = (prop: any) => {
 
   return (
     <Image
-      style={{tintColor: isFocus ? 'black' : 'gray'}}
+      style={[{tintColor: tintColor}]}
       source={{
         uri: name,
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
       }}
     />
   );
