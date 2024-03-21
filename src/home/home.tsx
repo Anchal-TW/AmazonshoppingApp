@@ -1,23 +1,57 @@
-import React from 'react';
-import {Text, View} from 'react-native';
-import ScreenTitle from '../helper/title';
+import React, {useEffect, useState} from 'react';
+import {Image, ScrollView, Text, View} from 'react-native';
 import {useTheme} from '../store/ThemeProvider-Context';
-import Storage from '../helper/Storage';
 
-const Home = (prop: any) => {
+interface User {
+  id: number;
+  title: string;
+  price: string;
+  category: string;
+  description: string;
+  image: string;
+}
+const Home = () => {
   const {backgroundColor, textColor} = useTheme();
-  const {userName} = prop;
+  const [items, setItems] = useState<User[]>([]);
 
-  const displayUserName =
-    userName !== undefined ? userName : prop?.route?.params.userName;
+  const getListItem = async () => {
+    const url = 'https://fakestoreapi.com/products';
+    fetch(url)
+      .then(resp => resp.json())
+      .then(json => {
+        setItems(json);
+      })
+      .catch(error => console.error(error));
+  };
+
+  useEffect(() => {
+    getListItem();
+  }, []);
+
   return (
-    <View
+    <ScrollView
       style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor,
-      }}></View>
+      }}>
+      {items.map(item => {
+        return (
+          <View style={{padding: 16}}>
+            <Text style={{backgroundColor: 'blanchedalmond'}}>
+              id: {item.id}
+            </Text>
+            <Text>title: {item.title}</Text>
+            <Text>price: {item.price}</Text>
+            <Image
+              style={{
+                width: 51,
+                height: 51,
+                resizeMode: 'contain',
+              }}
+              source={{uri: item.image}}></Image>
+          </View>
+        );
+      })}
+    </ScrollView>
   );
 };
 
