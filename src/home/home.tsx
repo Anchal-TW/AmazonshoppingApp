@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Text, View, FlatList, StyleSheet} from 'react-native';
 import {useTheme} from '../store/ThemeProvider-Context';
+import StarRating from '../helper/starRating';
 
 interface User {
   id: number;
@@ -40,9 +41,10 @@ const Home = () => {
           <Text style={styles.dollar}>$</Text>
           <Text style={styles.price}>{item.price}</Text>
         </View>
-        <Text style={styles.rating}>
-          Rating: {item.rating.rate} 
-        </Text>
+        <View style={styles.star}>
+          <StarRating rating={item.rating.rate} starSize={18} />
+          <Text> ({item.rating.rate}) </Text>
+        </View>
       </View>
     );
   };
@@ -79,13 +81,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   title: {
-    flex:1,
+    flex: 1,
     fontSize: 15,
-    fontWeight: 'bold',
     marginTop: 8,
-    color: 'lightblue',
+    color: 'black',
     padding: 10,
-    textAlign:'center'
+    textAlign: 'center',
   },
   price: {
     fontSize: 18,
@@ -93,11 +94,18 @@ const styles = StyleSheet.create({
     color: 'darkblue',
     textAlign: 'center',
   },
+  star: {
+    paddingTop: 10,
+    paddingLeft: 35,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginTop: 4,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   dollar: {
     fontSize: 12,
@@ -108,9 +116,8 @@ const styles = StyleSheet.create({
   rating: {
     fontSize: 14,
     marginTop: 4,
-    textAlign:'center'
+    textAlign: 'center',
   },
 });
 
 export default Home;
-
