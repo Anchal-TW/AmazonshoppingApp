@@ -9,76 +9,75 @@ import {useTheme} from './store/ThemeProvider-Context';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabScreen = () => {
+const BottomTabScreen = (props: any) => {
   const {backgroundColor, textColor} = useTheme();
-
+  const {userName} = props;
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarActiveTintColor: 'black',
-          tabBarInactiveTintColor: 'gray',
-          tabBarStyle: {
-            backgroundColor: backgroundColor,
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarActiveTintColor: 'black',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          backgroundColor: backgroundColor,
+        },
+        headerStyle: {
+          backgroundColor: backgroundColor,
+        },
+        headerTitleStyle: {
+          color: textColor,
+        },
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        initialParams={{userName}}
+        options={{
+          tabBarIcon: ({focused}) => {
+            const item = {
+              name: 'https://cdn-icons-png.freepik.com/256/263/263115.png',
+              isFocus: focused,
+            };
+            return SetIcon(item);
           },
-          headerStyle: {
-            backgroundColor: backgroundColor,
+        }}></Tab.Screen>
+      <Tab.Screen
+        name="Wishlist"
+        component={Wishlist}
+        options={{
+          tabBarIcon: ({focused}) => {
+            const item = {
+              name: 'https://cdn-icons-png.freepik.com/256/1077/1077035.png?ga=GA1.1.334955396.1710843703&',
+              isFocus: focused,
+            };
+            return SetIcon(item);
           },
-          headerTitleStyle: {
-            color: textColor,
+        }}></Tab.Screen>
+      <Tab.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          tabBarIcon: ({focused}) => {
+            const item = {
+              name: 'https://cdn-icons-png.freepik.com/256/1170/1170678.png?ga=GA1.1.334955396.1710843703&',
+              isFocus: focused,
+            };
+            return SetIcon(item);
           },
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => {
-              const item = {
-                name: 'https://cdn-icons-png.freepik.com/256/263/263115.png',
-                isFocus: focused,
-              };
-              return SetIcon(item);
-            },
-          }}></Tab.Screen>
-        <Tab.Screen
-          name="Wishlist"
-          component={Wishlist}
-          options={{
-            tabBarIcon: ({focused}) => {
-              const item = {
-                name: 'https://cdn-icons-png.freepik.com/256/1077/1077035.png?ga=GA1.1.334955396.1710843703&',
-                isFocus: focused,
-              };
-              return SetIcon(item);
-            },
-          }}></Tab.Screen>
-        <Tab.Screen
-          name="Cart"
-          component={Cart}
-          options={{
-            tabBarIcon: ({focused}) => {
-              const item = {
-                name: 'https://cdn-icons-png.freepik.com/256/1170/1170678.png?ga=GA1.1.334955396.1710843703&',
-                isFocus: focused,
-              };
-              return SetIcon(item);
-            },
-          }}></Tab.Screen>
-        <Tab.Screen
-          name="Settings"
-          component={Setting}
-          options={{
-            tabBarIcon: ({focused}) => {
-              const item = {
-                name: 'https://cdn-icons-png.freepik.com/256/3524/3524636.png?ga=GA1.1.334955396.1710843703&',
-                isFocus: focused,
-              };
-              return SetIcon(item);
-            },
-          }}></Tab.Screen>
-      </Tab.Navigator>
-    </NavigationContainer>
+        }}></Tab.Screen>
+      <Tab.Screen
+        name="Settings"
+        component={Setting}
+        options={{
+          tabBarIcon: ({focused}) => {
+            const item = {
+              name: 'https://cdn-icons-png.freepik.com/256/3524/3524636.png?ga=GA1.1.334955396.1710843703&',
+              isFocus: focused,
+            };
+            return SetIcon(item);
+          },
+        }}></Tab.Screen>
+    </Tab.Navigator>
   );
 };
 

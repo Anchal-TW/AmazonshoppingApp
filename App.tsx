@@ -1,8 +1,8 @@
 import React from 'react';
-import TabScreen from './src/tabScreen';
+import RootNavigations from './src/helper/rootNavigations';
 
 const App = () => {
-  return <TabScreen />;
+  return <RootNavigations />;
 };
 
 export default App;
