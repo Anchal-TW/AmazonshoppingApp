@@ -2,12 +2,11 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import ScreenTitle from '../helper/title';
 import {useTheme} from '../store/ThemeProvider-Context';
+import Storage from '../helper/Storage';
 
 const Home = (prop: any) => {
   const {backgroundColor, textColor} = useTheme();
   const {userName} = prop;
-
- 
 
   const displayUserName =
     userName !== undefined ? userName : prop?.route?.params.userName;
@@ -18,9 +17,7 @@ const Home = (prop: any) => {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor,
-      }}>
-      
-    </View>
+      }}></View>
   );
 };
 

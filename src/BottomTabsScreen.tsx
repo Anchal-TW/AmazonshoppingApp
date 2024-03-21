@@ -1,8 +1,8 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { Image, Text, View } from 'react-native';
-import { useTheme } from './store/ThemeProvider-Context';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {Image, Text, View} from 'react-native';
+import {useTheme} from './store/ThemeProvider-Context';
 import Storage from './helper/Storage';
 import Home from './home/home';
 import Wishlist from './wishlist/wishlist';
@@ -12,8 +12,8 @@ import Setting from './setting/setting';
 const Tab = createBottomTabNavigator();
 
 const BottomTabScreen = (props: any) => {
-  const { backgroundColor, textColor } = useTheme();
-  const { userName } = props;
+  const {backgroundColor, textColor, isDarkMode} = useTheme();
+  const {userName} = props;
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,12 +28,12 @@ const BottomTabScreen = (props: any) => {
 
     getUsername();
   }, []);
- 
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: 'black',
+        tabBarActiveTintColor: textColor,
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: {
           backgroundColor: backgroundColor,
@@ -45,20 +45,23 @@ const BottomTabScreen = (props: any) => {
           color: textColor,
         },
         headerRight: () => (
-          <View style={{ marginRight: 20, backgroundColor: backgroundColor }}>
-            <Text style={{color:textColor}}>{username ? `Hey ${username}!` : 'Loading...'}</Text>
+          <View style={{marginRight: 20, backgroundColor: backgroundColor}}>
+            <Text style={{color: textColor}}>
+              {username ? `Hey ${username}!` : 'Loading...'}
+            </Text>
           </View>
         ),
       }}>
       <Tab.Screen
         name="Home"
         component={Home}
-        initialParams={{ userName }}
+        initialParams={{userName}}
         options={{
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/263/263115.png',
               isFocus: focused,
+              isDark: isDarkMode,
             };
             return SetIcon(item);
           },
@@ -68,10 +71,11 @@ const BottomTabScreen = (props: any) => {
         name="Wishlist"
         component={Wishlist}
         options={{
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/1077/1077035.png?ga=GA1.1.334955396.1710843703&',
               isFocus: focused,
+              isDark: isDarkMode,
             };
             return SetIcon(item);
           },
@@ -81,10 +85,11 @@ const BottomTabScreen = (props: any) => {
         name="Cart"
         component={Cart}
         options={{
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/1170/1170678.png?ga=GA1.1.334955396.1710843703&',
               isFocus: focused,
+              isDark: isDarkMode,
             };
             return SetIcon(item);
           },
@@ -94,10 +99,11 @@ const BottomTabScreen = (props: any) => {
         name="Settings"
         component={Setting}
         options={{
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/3524/3524636.png?ga=GA1.1.334955396.1710843703&',
               isFocus: focused,
+              isDark: isDarkMode,
             };
             return SetIcon(item);
           },
@@ -108,10 +114,13 @@ const BottomTabScreen = (props: any) => {
 };
 
 const SetIcon = (prop: any) => {
-  const { name, isFocus } = prop;
+  const {name, isDark, isFocus} = prop;
+
+  let tintColor = isFocus && isDark ? 'white' : 'gray';
+
   return (
     <Image
-      style={{ tintColor: isFocus ? 'black' : 'gray' }}
+      style={{tintColor: isFocus ? 'black' : 'gray'}}
       source={{
         uri: name,
         height: 20,
