@@ -16,7 +16,7 @@ const Home = () => {
     setInputText(text);
   };
 
-  Storage.removeItem('userName');
+  //Storage.removeItem('userName');
 
   const registerName = () => {
     return (

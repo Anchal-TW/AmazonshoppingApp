@@ -26,8 +26,8 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const toggleTheme = () => {
-    setIsDarkMode(prevMode => {
-      const newMode = !prevMode;
+    setIsDarkMode(isDarkMode => {
+      const newMode = !isDarkMode;
       Storage.setItem('darkmode', newMode.toString());
       return newMode;
     });
