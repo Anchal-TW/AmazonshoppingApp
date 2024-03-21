@@ -20,6 +20,7 @@ const Login = ({navigation}: LoginScreenProp) => {
     Storage.setItem('userName', inputText);
     navigation.replace('TabScreen', {userName: inputText});
   };
+  //Storage.removeItem('userName');
 
   return (
     <View style={styles.loginScreen}>
@@ -43,3 +44,5 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+
+

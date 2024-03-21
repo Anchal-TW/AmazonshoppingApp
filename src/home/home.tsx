@@ -7,7 +7,7 @@ const Home = (prop: any) => {
   const {backgroundColor, textColor} = useTheme();
   const {userName} = prop;
 
-  // Storage.removeItem('userName');
+ 
 
   const displayUserName =
     userName !== undefined ? userName : prop?.route?.params.userName;
@@ -19,7 +19,7 @@ const Home = (prop: any) => {
         alignItems: 'center',
         backgroundColor,
       }}>
-      <Text style={{color: textColor}}>{displayUserName}</Text>
+      
     </View>
   );
 };

@@ -1,17 +1,34 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, View } from 'react-native';
+import { useTheme } from './store/ThemeProvider-Context';
+import Storage from './helper/Storage';
 import Home from './home/home';
 import Wishlist from './wishlist/wishlist';
 import Cart from './cart/cart';
 import Setting from './setting/setting';
-import {Image} from 'react-native';
-import {useTheme} from './store/ThemeProvider-Context';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabScreen = (props: any) => {
-  const {backgroundColor, textColor} = useTheme();
-  const {userName} = props;
+  const { backgroundColor, textColor } = useTheme();
+  const { userName } = props;
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getUsername = async () => {
+      try {
+        const usernameFromStorage = await Storage.getItem('userName');
+        setUsername(usernameFromStorage);
+      } catch (error) {
+        console.error('Error retrieving username:', error);
+      }
+    };
+
+    getUsername();
+  }, []);
+ 
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -27,70 +44,80 @@ const BottomTabScreen = (props: any) => {
         headerTitleStyle: {
           color: textColor,
         },
+        headerRight: () => (
+          <View style={{ marginRight: 20, backgroundColor: backgroundColor }}>
+            <Text style={{color:textColor}}>{username ? `Hey ${username}!` : 'Loading...'}</Text>
+          </View>
+        ),
       }}>
       <Tab.Screen
         name="Home"
         component={Home}
-        initialParams={{userName}}
+        initialParams={{ userName }}
         options={{
-          tabBarIcon: ({focused}) => {
+          tabBarIcon: ({ focused }) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/263/263115.png',
               isFocus: focused,
             };
             return SetIcon(item);
           },
-        }}></Tab.Screen>
+        }}
+      />
       <Tab.Screen
         name="Wishlist"
         component={Wishlist}
         options={{
-          tabBarIcon: ({focused}) => {
+          tabBarIcon: ({ focused }) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/1077/1077035.png?ga=GA1.1.334955396.1710843703&',
               isFocus: focused,
             };
             return SetIcon(item);
           },
-        }}></Tab.Screen>
+        }}
+      />
       <Tab.Screen
         name="Cart"
         component={Cart}
         options={{
-          tabBarIcon: ({focused}) => {
+          tabBarIcon: ({ focused }) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/1170/1170678.png?ga=GA1.1.334955396.1710843703&',
               isFocus: focused,
             };
             return SetIcon(item);
           },
-        }}></Tab.Screen>
+        }}
+      />
       <Tab.Screen
         name="Settings"
         component={Setting}
         options={{
-          tabBarIcon: ({focused}) => {
+          tabBarIcon: ({ focused }) => {
             const item = {
               name: 'https://cdn-icons-png.freepik.com/256/3524/3524636.png?ga=GA1.1.334955396.1710843703&',
               isFocus: focused,
             };
             return SetIcon(item);
           },
-        }}></Tab.Screen>
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
 const SetIcon = (prop: any) => {
-  const {name, isFocus} = prop;
+  const { name, isFocus } = prop;
   return (
     <Image
-      style={{tintColor: isFocus ? 'black' : 'gray'}}
+      style={{ tintColor: isFocus ? 'black' : 'gray' }}
       source={{
         uri: name,
         height: 20,
         width: 20,
-      }}></Image>
+      }}
+    />
   );
 };
 
