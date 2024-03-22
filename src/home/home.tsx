@@ -35,7 +35,7 @@ const Home = () => {
   const displayItem = ({item}: {item: User}) => {
     return (
       <View style={styles.itemContainer}>
-        <Image style={styles.image} source={{uri: item.image}} />
+        <Image style={styles.image} source={{uri: item.image}} resizeMode='contain'/>
         <Text style={styles.title}>{item.title}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.dollar}>$</Text>
