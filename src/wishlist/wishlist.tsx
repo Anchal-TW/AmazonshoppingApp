@@ -11,7 +11,7 @@ import {useWishlist} from './WishlistContext';
 import {useTheme} from '../store/ThemeProvider-Context';
 
 const Wishlist = () => {
-  const {wishlist, clearWishlist} = useWishlist();
+  const {wishlist, clearWishlist, removeFromWishlist} = useWishlist();
   const {backgroundColor, textColor, isDarkMode} = useTheme();
 
   const handleClearAll = () => {
@@ -39,6 +39,11 @@ const Wishlist = () => {
           <Text style={[styles.price, {color: textColor}]}>{item.price}</Text>
         </View>
       </View>
+      <TouchableOpacity
+        onPress={() => removeFromWishlist(item.id)}
+        style={styles.removeButton}>
+        <Text style={styles.removeButtonText}>Remove</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -109,14 +114,25 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     position: 'relative',
-    zIndex: 1, 
+    zIndex: 1,
     alignSelf: 'flex-end',
     marginTop: 10,
     padding: 10,
   },
   clearButtonText: {
     fontSize: 16,
-    color: 'red', 
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  removeButton: {
+    backgroundColor: 'lightcoral',
+    padding: 8,
+    borderRadius: 5,
+    marginTop: 5,
+    alignItems: 'center',
+  },
+  removeButtonText: {
+    color: 'white',
     fontWeight: 'bold',
   },
 });

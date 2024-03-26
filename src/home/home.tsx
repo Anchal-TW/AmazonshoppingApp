@@ -1,15 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Image,
-  Text,
-  View,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import {useTheme} from '../store/ThemeProvider-Context';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTheme } from '../store/ThemeProvider-Context';
 import StarRating from '../helper/starRating';
-import {useWishlist} from '../wishlist/WishlistContext';
+import { useWishlist } from '../wishlist/WishlistContext'; 
 
 interface User {
   id: number;
@@ -18,12 +11,12 @@ interface User {
   category: string;
   description: string;
   image: string;
-  rating: {rate: number; count: number};
+  rating: { rate: number; count: number };
 }
 
 const Home = () => {
-  const {backgroundColor, textColor, isDarkMode} = useTheme();
-  const {wishlist, addToWishlist} = useWishlist();
+  const { backgroundColor, textColor, isDarkMode } = useTheme();
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist(); 
 
   const [items, setItems] = useState<User[]>([]);
 
@@ -41,20 +34,22 @@ const Home = () => {
     getListItem();
   }, []);
 
-  const isItemInWishlist = (itemId: number) => {
-    return wishlist.some(item => item.id === itemId);
+  const handleAddToWishlist = (item: User) => {
+    const isItemInWishlist = wishlist.some(wishlistItem => wishlistItem.id === item.id);
+    if (isItemInWishlist) {
+      
+      removeFromWishlist(item.id);
+    } else {
+      
+      addToWishlist(item);
+    }
   };
 
-  const displayItem = ({item}: {item: User}) => {
-    const isWishlistItem = isItemInWishlist(item.id);
-
+  const displayItem = ({ item }: { item: User }) => {
+    const isItemInWishlist = wishlist.some(wishlistItem => wishlistItem.id === item.id);
     return (
       <View style={styles.itemContainer}>
-        <Image
-          style={styles.image}
-          source={{uri: item.image}}
-          resizeMode="contain"
-        />
+        <Image style={styles.image} source={{ uri: item.image }} resizeMode='contain' />
         <Text style={styles.title}>{item.title}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.dollar}>$</Text>
@@ -64,15 +59,8 @@ const Home = () => {
           <StarRating rating={item.rating.rate} starSize={18} />
           <Text> ({item.rating.rate}) </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => addToWishlist(item)}
-          style={[
-            styles.addToWishlistButton,
-            isWishlistItem && styles.addedToWishlistButton,
-          ]}>
-          <Text style={styles.addToWishlistText}>
-            {isWishlistItem ? 'Added to Wishlist' : 'Add to Wishlist'}
-          </Text>
+        <TouchableOpacity onPress={() => handleAddToWishlist(item)} style={styles.addToWishlistButton}>
+          <Text style={styles.addToWishlistText}>{isItemInWishlist ? <Text style={styles.removeButton}>Remove from Wishlist</Text> : 'Add to Wishlist'}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -86,7 +74,7 @@ const Home = () => {
       numColumns={2}
       contentContainerStyle={[
         styles.container,
-        {backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke'},
+        { backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke' },
       ]}
     />
   );
@@ -102,6 +90,9 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 30,
     backgroundColor: 'white',
+  },
+  removeButton: {
+    color: 'lightcoral',
   },
   image: {
     width: '100%',
@@ -153,9 +144,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
     alignItems: 'center',
-  },
-  addedToWishlistButton: {
-    backgroundColor: 'green',
   },
   addToWishlistText: {
     color: 'white',
