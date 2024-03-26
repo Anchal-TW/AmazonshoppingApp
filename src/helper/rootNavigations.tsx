@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import Login, {RootStackParamList} from '../login/login';
 import TabScreen from '../tabScreen';
 import Storage from './Storage';
-
+import { WishlistProvider } from '../wishlist/WishlistContext';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const RootNavigations = () => {
   const [userName, setUserName] = useState('');
@@ -25,6 +25,7 @@ const RootNavigations = () => {
   }, []);
   return (
     <NavigationContainer>
+      <WishlistProvider>
       {userName ? (
         <TabScreen userName={userName} />
       ) : (
@@ -36,7 +37,8 @@ const RootNavigations = () => {
             component={TabScreen}
           />
         </Stack.Navigator>
-      )}
+        )}
+        </WishlistProvider>
     </NavigationContainer>
   );
 };
