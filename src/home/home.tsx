@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Text, View, FlatList, StyleSheet} from 'react-native';
-import {useTheme} from '../store/ThemeProvider-Context';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTheme } from '../store/ThemeProvider-Context';
 import StarRating from '../helper/starRating';
 
 interface User {
@@ -10,13 +10,14 @@ interface User {
   category: string;
   description: string;
   image: string;
-  rating: {rate: number; count: number};
+  rating: { rate: number; count: number };
 }
 
 const Home = () => {
-  const {backgroundColor, textColor, isDarkMode} = useTheme();
+  const { backgroundColor, textColor, isDarkMode } = useTheme();
 
   const [items, setItems] = useState<User[]>([]);
+  const [wishlist, setWishlist] = useState<User[]>([]);
 
   const getListItem = async () => {
     const url = 'https://fakestoreapi.com/products';
@@ -32,10 +33,14 @@ const Home = () => {
     getListItem();
   }, []);
 
-  const displayItem = ({item}: {item: User}) => {
+  const addToWishlist = (item: User) => {
+    setWishlist(prevWishlist => [...prevWishlist, item]);
+  };
+
+  const displayItem = ({ item }: { item: User }) => {
     return (
       <View style={styles.itemContainer}>
-        <Image style={styles.image} source={{uri: item.image}} resizeMode='contain'/>
+        <Image style={styles.image} source={{ uri: item.image }} resizeMode='contain' />
         <Text style={styles.title}>{item.title}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.dollar}>$</Text>
@@ -45,6 +50,9 @@ const Home = () => {
           <StarRating rating={item.rating.rate} starSize={18} />
           <Text> ({item.rating.rate}) </Text>
         </View>
+        <TouchableOpacity onPress={() => addToWishlist(item)} style={styles.addToWishlistButton}>
+          <Text style={styles.addToWishlistText}>Add to Wishlist</Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -57,7 +65,7 @@ const Home = () => {
       numColumns={2}
       contentContainerStyle={[
         styles.container,
-        {backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke'},
+        { backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke' },
       ]}
     />
   );
@@ -117,6 +125,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 4,
     textAlign: 'center',
+  },
+  addToWishlistButton: {
+    backgroundColor: 'lightblue',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  addToWishlistText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
