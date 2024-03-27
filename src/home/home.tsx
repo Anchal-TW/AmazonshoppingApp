@@ -1,8 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Image, Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { useTheme } from '../store/ThemeProvider-Context';
+import React, {useEffect, useState} from 'react';
+import {
+  Image,
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import {useTheme} from '../store/ThemeProvider-Context';
 import StarRating from '../helper/starRating';
-import { useWishlist } from '../wishlist/WishlistContext'; 
+import {useWishlist} from '../wishlist/WishlistContext';
 
 interface User {
   id: number;
@@ -11,12 +18,12 @@ interface User {
   category: string;
   description: string;
   image: string;
-  rating: { rate: number; count: number };
+  rating: {rate: number; count: number};
 }
 
 const Home = () => {
-  const { backgroundColor, textColor, isDarkMode } = useTheme();
-  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist(); 
+  const {backgroundColor, textColor, isDarkMode} = useTheme();
+  const {wishlist, addToWishlist, removeFromWishlist} = useWishlist();
 
   const [items, setItems] = useState<User[]>([]);
 
@@ -35,21 +42,39 @@ const Home = () => {
   }, []);
 
   const handleAddToWishlist = (item: User) => {
-    const isItemInWishlist = wishlist.some(wishlistItem => wishlistItem.id === item.id);
+    const isItemInWishlist = wishlist.some(
+      wishlistItem => wishlistItem.id === item.id,
+    );
     if (isItemInWishlist) {
-      
       removeFromWishlist(item.id);
     } else {
-      
       addToWishlist(item);
     }
   };
 
-  const displayItem = ({ item }: { item: User }) => {
-    const isItemInWishlist = wishlist.some(wishlistItem => wishlistItem.id === item.id);
+  const displayItem = ({item}: {item: User}) => {
+    const isItemInWishlist = wishlist.some(
+      wishlistItem => wishlistItem.id === item.id,
+    );
     return (
       <View style={styles.itemContainer}>
-        <Image style={styles.image} source={{ uri: item.image }} resizeMode='contain' />
+        <TouchableOpacity onPress={() => handleAddToWishlist(item)}>
+          <Image
+            style={{alignSelf: 'flex-end', marginTop: 5, height: 20, width: 25}}
+            source={{
+              uri: !isItemInWishlist
+                ? 'https://cdn-icons-png.freepik.com/256/1077/1077035.png?ga=GA1.1.334955396.1710843703&'
+                : 'https://cdn-icons-png.freepik.com/256/14440/14440339.png?ga=GA1.1.865553007.1711522825&',
+            }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Image
+          style={styles.image}
+          source={{uri: item.image}}
+          resizeMode="contain"
+        />
+
         <Text style={styles.title}>{item.title}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.dollar}>$</Text>
@@ -59,9 +84,18 @@ const Home = () => {
           <StarRating rating={item.rating.rate} starSize={18} />
           <Text> ({item.rating.rate}) </Text>
         </View>
-        <TouchableOpacity onPress={() => handleAddToWishlist(item)} style={styles.addToWishlistButton}>
-          <Text style={styles.addToWishlistText}>{isItemInWishlist ? <Text style={styles.removeButton}>Remove from Wishlist</Text> : 'Add to Wishlist'}</Text>
-        </TouchableOpacity>
+        {/* <TouchableOpacity
+          onPress={() => handleAddToWishlist(item)}
+          style={styles.addToWishlistButton}>
+          <Text style={styles.addToWishlistText}>
+            {isItemInWishlist ? (
+              //https://cdn-icons-png.freepik.com/256/14440/14440339.png?ga=GA1.1.865553007.1711522825&
+              <Text style={styles.removeButton}>Remove from Wishlist</Text>
+            ) : (
+              'Add to Wishlist'
+            )}
+          </Text>
+        </TouchableOpacity> */}
       </View>
     );
   };
@@ -74,7 +108,7 @@ const Home = () => {
       numColumns={2}
       contentContainerStyle={[
         styles.container,
-        { backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke' },
+        {backgroundColor: isDarkMode ? backgroundColor : 'whitesmoke'},
       ]}
     />
   );
