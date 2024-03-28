@@ -1,7 +1,6 @@
-// TODO : JSX / TSX need REACT IMPORT !!!!
-
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import {useTheme} from '../store/ThemeProviderContext';
+import React from 'react';
 
 const Setting = () => {
   const {toggleTheme, isDarkMode, backgroundColor, textColor} = useTheme();

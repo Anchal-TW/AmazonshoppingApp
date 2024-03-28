@@ -14,36 +14,26 @@ const StarRating: React.FC<StarRatingProps> = ({rating, starSize = 20}) => {
     const halfStars = Math.ceil(rating - fullStars);
     const emptyStars = totalStars - (fullStars + halfStars);
 
-    const stars = [];
+    const stars: React.JSX.Element[] = [];
 
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <Image
-          key={i}
-          source={require('../assets/fullStar.png')}
-          style={{width: starSize, height: starSize}}
-        />,
-      );
-    }
-
-    if (halfStars === 1) {
+    const setStarImage = (asset: any) => {
       stars.push(
         <Image
           key={stars.length}
-          source={require('../assets/halfStar.png')}
+          source={asset}
           style={{width: starSize, height: starSize}}
         />,
       );
-    }
+    };
 
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <Image
-          key={stars.length}
-          source={require('../assets/emptyStar.png')}
-          style={{width: starSize, height: starSize}}
-        />,
-      );
+    for (let i = 0; i < totalStars; i++) {
+      if (i < fullStars) {
+        setStarImage(require('../assets/fullStar.png'));
+      } else if (i === Math.floor(rating) && rating % 1 !== 0) {
+        setStarImage(require('../assets/halfStar.png'));
+      } else {
+        setStarImage(require('../assets/emptyStar.png'));
+      }
     }
 
     return stars;
