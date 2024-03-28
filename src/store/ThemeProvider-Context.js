@@ -1,3 +1,4 @@
+// TODO : Change jsx to tsx. Why only have this as js
 import React, {createContext, useState, useContext, useEffect} from 'react';
 import Storage from '../helper/Storage';
 

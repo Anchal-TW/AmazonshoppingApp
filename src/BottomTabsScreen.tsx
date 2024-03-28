@@ -1,4 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// TODO : remove unused code
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
@@ -16,6 +17,7 @@ const BottomTabScreen = (props: any) => {
   const {userName} = props;
   const [username, setUsername] = useState<string | null>(null);
 
+  // TODO : same logic is duplicated, remove duplication for username Fetch
   useEffect(() => {
     const getUsername = async () => {
       try {

@@ -28,6 +28,7 @@ const Home = () => {
   const [items, setItems] = useState<User[]>([]);
 
   const getListItem = async () => {
+    // TODO : extract the API layer out of component
     const url = 'https://fakestoreapi.com/products';
     fetch(url)
       .then(resp => resp.json())

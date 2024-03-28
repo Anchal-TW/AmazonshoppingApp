@@ -1,3 +1,5 @@
+// TODO : JSX / TSX need REACT IMPORT !!!!
+
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import {useTheme} from '../store/ThemeProvider-Context';
 

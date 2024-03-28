@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BottomTabScreen from './BottomTabsScreen';
+// TODO : ThemeProvider-Context is not the case convention followed
 import {ThemeProvider} from './store/ThemeProvider-Context';
 
 const TabScreen = (props: any) => {
@@ -9,7 +10,8 @@ const TabScreen = (props: any) => {
     userName !== undefined ? userName : props?.route?.params.userName;
   return (
     <ThemeProvider>
-      <BottomTabScreen userName={updatedUserName}></BottomTabScreen>
+      {/* TODO : Use self closing tags */}
+      <BottomTabScreen userName={updatedUserName} />
     </ThemeProvider>
   );
 };

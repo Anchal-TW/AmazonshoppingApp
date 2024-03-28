@@ -6,12 +6,13 @@ interface StarRatingProps {
   starSize?: number;
 }
 
+// TODO : refactor code on these helper funcs
 const StarRating: React.FC<StarRatingProps> = ({rating, starSize = 20}) => {
   const renderStars = () => {
     const totalStars = 5;
     const fullStars = Math.floor(rating);
     const halfStars = Math.ceil(rating - fullStars);
-    const emptyStars = totalStars - fullStars - halfStars;
+    const emptyStars = totalStars - (fullStars + halfStars);
 
     const stars = [];
 

@@ -6,6 +6,7 @@ const Cart = () => {
   const {backgroundColor, textColor} = useTheme();
 
   return (
+    // TODO : Extract styles, maybe a component
     <View
       style={{
         flex: 1,

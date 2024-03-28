@@ -9,4 +9,5 @@ const styles = StyleSheet.create({
   screen: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });
 
+// TODO : multiple exports for same component
 export default Screen;
