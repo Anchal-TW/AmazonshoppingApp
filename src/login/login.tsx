@@ -25,7 +25,7 @@ const Login = ({navigation}: LoginScreenProp) => {
   };
 
   const handleSubmit = () => {
-    Storage.setItem('userName', inputText);
+    //Storage.setItem('userName', inputText);
     loginName(inputText);
     navigation.replace('TabScreen', {userName: inputText});
   };

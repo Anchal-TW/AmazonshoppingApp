@@ -16,8 +16,6 @@ const BottomTabScreen = (props: any) => {
   const {userName1} = props;
   const {userName} = useLoginContext();
 
-  console.log('user', userName);
-
   return (
     <Tab.Navigator
       initialRouteName="Home"

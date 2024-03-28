@@ -1,4 +1,12 @@
-import {Button, StyleSheet, Switch, Text, TextInput, View} from 'react-native';
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {useTheme} from '../store/ThemeProviderContext';
 import React, {useState} from 'react';
 import {useLoginContext} from '../store/UserNameContext';
@@ -9,8 +17,12 @@ const Setting = () => {
   const [newUsername, setNewUsername] = useState(userName);
 
   const handleChangeName = () => {
-    changeName(newUsername);
-    setNewUsername('');
+    if (newUsername.trim() === '') {
+      Alert.alert('Error', 'Please enter a valid username.');
+    } else {
+      changeName(newUsername);
+      setNewUsername('');
+    }
   };
 
   return (
@@ -21,7 +33,7 @@ const Setting = () => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder={userName}
+          placeholder="Enter New Name"
           placeholderTextColor={isDarkMode ? '#ffffff' : '#000000'} // Set placeholderTextColor conditionally
           style={[styles.input, {color: textColor}]}
           onChangeText={setNewUsername}

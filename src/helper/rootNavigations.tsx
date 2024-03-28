@@ -5,10 +5,11 @@ import Login, {RootStackParamList} from '../login/login';
 import TabScreen from '../tabScreen';
 import {WishlistProvider} from '../wishlist/WishlistContext';
 import {CartProvider} from '../cart/CartContext';
-import {useLogin} from './loginUser';
+// import {useLogin} from './loginUser';
+import {useLoginContext} from '../store/UserNameContext';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const RootNavigations = () => {
-  const userName = useLogin();
+  const {userName} = useLoginContext();
 
   return (
     <NavigationContainer>
