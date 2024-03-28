@@ -9,7 +9,6 @@ const TabScreen = (props: any) => {
     userName !== undefined ? userName : props?.route?.params.userName;
   return (
     <ThemeProvider>
-      {/* TODO : Use self closing tags */}
       <BottomTabScreen userName={updatedUserName} />
     </ThemeProvider>
   );

@@ -1,14 +1,25 @@
-// TODO : Change jsx to tsx. Why only have this as js
 import React, {createContext, useState, useContext, useEffect} from 'react';
 import Storage from '../helper/Storage';
 
-const ThemeContext = createContext();
+type ThemeType = {
+  backgroundColor: string;
+  textColor: string;
+  isDarkMode: boolean;
+  toggleTheme: () => void;
+};
+
+const ThemeContext = createContext<ThemeType>({
+  backgroundColor: '',
+  textColor: '',
+  isDarkMode: false,
+  toggleTheme: function (): void {},
+});
 
 export const useTheme = () => {
   return useContext(ThemeContext);
 };
 
-export const ThemeProvider = ({children}) => {
+export const ThemeProvider = ({children}: any) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
