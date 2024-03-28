@@ -1,8 +1,7 @@
 import React from 'react';
 
 import BottomTabScreen from './BottomTabsScreen';
-// TODO : ThemeProvider-Context is not the case convention followed
-import {ThemeProvider} from './store/ThemeProvider-Context';
+import {ThemeProvider} from './store/ThemeProviderContext';
 
 const TabScreen = (props: any) => {
   const {userName} = props;

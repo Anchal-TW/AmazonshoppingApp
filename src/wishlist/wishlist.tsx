@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useWishlist} from './WishlistContext';
-import {useTheme} from '../store/ThemeProvider-Context';
+import {useTheme} from '../store/ThemeProviderContext';
 
 const Wishlist = () => {
   const {wishlist, clearWishlist, removeFromWishlist} = useWishlist();

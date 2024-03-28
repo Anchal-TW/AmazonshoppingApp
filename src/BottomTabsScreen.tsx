@@ -1,35 +1,19 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// TODO : remove unused code
-import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {useTheme} from './store/ThemeProvider-Context';
-import Storage from './helper/Storage';
-import Home from './home/home';
-import Wishlist from './wishlist/wishlist';
 import Cart from './cart/cart';
+import {useLogin} from './helper/loginUser';
+import Home from './home/home';
 import Setting from './setting/setting';
+import {useTheme} from './store/ThemeProviderContext';
+import Wishlist from './wishlist/wishlist';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabScreen = (props: any) => {
   const {backgroundColor, textColor, isDarkMode} = useTheme();
   const {userName} = props;
-  const [username, setUsername] = useState<string | null>(null);
-
-  // TODO : same logic is duplicated, remove duplication for username Fetch
-  useEffect(() => {
-    const getUsername = async () => {
-      try {
-        const usernameFromStorage = await Storage.getItem('userName');
-        setUsername(usernameFromStorage);
-      } catch (error) {
-        console.error('Error retrieving username:', error);
-      }
-    };
-
-    getUsername();
-  }, []);
+  const username = useLogin();
 
   return (
     <Tab.Navigator

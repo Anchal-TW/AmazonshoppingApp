@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {useTheme} from '../store/ThemeProvider-Context';
+import {useTheme} from '../store/ThemeProviderContext';
 
 const Cart = () => {
   const {backgroundColor, textColor} = useTheme();

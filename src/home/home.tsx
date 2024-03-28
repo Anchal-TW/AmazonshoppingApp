@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from '../store/ThemeProvider-Context';
+import {useTheme} from '../store/ThemeProviderContext';
 import StarRating from '../helper/starRating';
 import {useWishlist} from '../wishlist/WishlistContext';
 

@@ -1,8 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-// TODO : remove unused code
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
