@@ -10,6 +10,7 @@ import {
 import {useTheme} from '../store/ThemeProviderContext';
 import StarRating from '../helper/starRating';
 import {useWishlist} from '../wishlist/WishlistContext';
+import {AddedItem, useCart} from '../cart/CartContext';
 
 interface User {
   id: number;
@@ -24,6 +25,7 @@ interface User {
 const Home = () => {
   const {backgroundColor, textColor, isDarkMode} = useTheme();
   const {wishlist, addToWishlist, removeFromWishlist} = useWishlist();
+  const {cartItem, addToCart, removeFromCart} = useCart();
 
   const [items, setItems] = useState<User[]>([]);
 
@@ -51,6 +53,29 @@ const Home = () => {
     } else {
       addToWishlist(item);
     }
+  };
+
+  const handleAddToCart = (item: User) => {
+    let convertUserToCartItem = (item: User): AddedItem => {
+      return {
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        description: item.description,
+        image: item.image,
+        quantity: 1,
+      };
+    };
+    let selectedItem = convertUserToCartItem(item);
+    if (isItemInCart(selectedItem.id)) {
+      removeFromCart(item.id);
+    } else {
+      addToCart(selectedItem);
+    }
+  };
+
+  const isItemInCart = (id: number) => {
+    return cartItem.some(cartItem => cartItem.id === id);
   };
 
   const displayItem = ({item}: {item: User}) => {
@@ -85,18 +110,17 @@ const Home = () => {
           <StarRating rating={item.rating.rate} starSize={18} />
           <Text> ({item.rating.rate}) </Text>
         </View>
-        {/* <TouchableOpacity
-          onPress={() => handleAddToWishlist(item)}
-          style={styles.addToWishlistButton}>
+        <TouchableOpacity
+          onPress={() => handleAddToCart(item)}
+          style={styles.addToCarlistButton}>
           <Text style={styles.addToWishlistText}>
-            {isItemInWishlist ? (
-              //https://cdn-icons-png.freepik.com/256/14440/14440339.png?ga=GA1.1.865553007.1711522825&
-              <Text style={styles.removeButton}>Remove from Wishlist</Text>
+            {isItemInCart(item.id) ? (
+              <Text>Remove from cart</Text>
             ) : (
-              'Add to Wishlist'
+              'Add to cart'
             )}
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     );
   };
@@ -125,9 +149,6 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 30,
     backgroundColor: 'white',
-  },
-  removeButton: {
-    color: 'lightcoral',
   },
   image: {
     width: '100%',
@@ -173,7 +194,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textAlign: 'center',
   },
-  addToWishlistButton: {
+  addToCarlistButton: {
     backgroundColor: 'lightblue',
     padding: 10,
     borderRadius: 5,
