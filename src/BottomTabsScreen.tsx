@@ -7,13 +7,16 @@ import Home from './home/home';
 import Setting from './setting/setting';
 import {useTheme} from './store/ThemeProviderContext';
 import Wishlist from './wishlist/wishlist';
+import {useLoginContext} from './store/UserNameContext';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabScreen = (props: any) => {
   const {backgroundColor, textColor, isDarkMode} = useTheme();
-  const {userName} = props;
-  const username = useLogin();
+  const {userName1} = props;
+  const {userName} = useLoginContext();
+
+  console.log('user', userName);
 
   return (
     <Tab.Navigator
@@ -33,7 +36,7 @@ const BottomTabScreen = (props: any) => {
         headerRight: () => (
           <View style={{marginRight: 20, backgroundColor: backgroundColor}}>
             <Text style={{color: textColor}}>
-              {username ? `Hey ${username}!` : 'Loading...'}
+              {userName ? `Hey ${userName}!` : 'Loading...'}
             </Text>
           </View>
         ),
@@ -41,7 +44,7 @@ const BottomTabScreen = (props: any) => {
       <Tab.Screen
         name="Home"
         component={Home}
-        initialParams={{userName}}
+        initialParams={{userName1}}
         options={{
           tabBarIcon: ({focused}) => {
             const item = {

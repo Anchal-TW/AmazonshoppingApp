@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import Storage from '../helper/Storage';
+import {useLoginContext} from '../store/UserNameContext';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -17,6 +18,7 @@ export type RootStackParamList = {
 type LoginScreenProp = NativeStackScreenProps<RootStackParamList, 'Login'>;
 const Login = ({navigation}: LoginScreenProp) => {
   const [inputText, setInputText] = useState('');
+  const {userName, loginName, changeName} = useLoginContext();
 
   const handleTextInput = (text: string) => {
     setInputText(text);
@@ -24,6 +26,7 @@ const Login = ({navigation}: LoginScreenProp) => {
 
   const handleSubmit = () => {
     Storage.setItem('userName', inputText);
+    loginName(inputText);
     navigation.replace('TabScreen', {userName: inputText});
   };
   //Storage.removeItem('userName');
